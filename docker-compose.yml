@@ -1,5 +1,10 @@
 services:
   web:
-    image: <account>.dkr.ecr.us-east-1.amazonaws.com/frontend:<git-sha>
-    ports: ["80:8080"]
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # optional: still give it a name
+    image: frontend:local
+    ports:
+      - "3000:3000"
     
