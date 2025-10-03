@@ -8,10 +8,10 @@ npm-debug.log*
 Dockerfile.dev
 __MACOSX
 .DS_Store
-.git
-node_modules
-.next
 dist
 Dockerfile*
 .ebextensions
 .platform
+.next/cache
+dist
+build
