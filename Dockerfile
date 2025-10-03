@@ -1,12 +1,14 @@
-# Dockerfile (prod)
-FROM public.ecr.aws/docker/library/node:20-alpine AS build
+# syntax=docker/dockerfile:1.5
+FROM node:lts-alpine AS deps
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci
+RUN --mount=type=cache,target=/root/.npm npm ci
+
+FROM deps AS build
 COPY . .
 RUN npm run build
 
-FROM public.ecr.aws/nginx/nginx:alpine
-COPY --from=build /app/build /usr/share/nginx/html
+FROM nginx:alpine
+COPY --from=build /app/dist /usr/share/nginx/html
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
